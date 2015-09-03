@@ -1,6 +1,6 @@
 {
   "name": "@surge-sh/netrc",
-  "version": "0.1.5-beta.2",
+  "version": "0.1.5-beta.3",
   "description": "Parse netrc files",
   "main": "index.js",
   "scripts": {
