@@ -4,6 +4,7 @@
 
 var fs = require('fs');
 var join = require('path').join;
+var os = require('os');
 
 /**
  * Read and parse .netrc
@@ -34,12 +35,12 @@ module.exports = exports = function(file) {
 
 exports.parse = function(content) {
   // Remove comments
-  var lines = content.split('\n');
+  var lines = content.split(os.EOL);
   for (var n in lines) {
     var i = lines[n].indexOf('#');
     if (i > -1) lines[n] = lines[n].substring(0, i);
   }
-  content = lines.join('\n');
+  content = lines.join(os.EOL);
 
   var tokens = content.split(/[ \t\n\r]+/);
   var machines = {};
@@ -88,7 +89,7 @@ exports.format = function format(machines){
       if (typeof(machine[attr]) === 'string') lines.push('    ' + attr + ' ' + machine[attr]);
     });
   });
-  return lines.join('\n');
+  return lines.join(os.EOL);
 };
 
 /**
@@ -100,8 +101,9 @@ exports.format = function format(machines){
 
 exports.save = function save(machines){
   var home = getHomePath();
-  var destFile = join(home, '.netrc');
-  var data = exports.format(machines) + '\n';
+  var destFile = join(home, ".netrc");
+
+  var data = exports.format(machines) + os.EOL;
   fs.writeFileSync(destFile, data);
 };
 
